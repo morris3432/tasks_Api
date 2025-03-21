@@ -10,7 +10,6 @@ users = APIRouter(
     tags=["Users"],
 )
 
-
 @users.post("/", description="Crea un nuevo usuario")
 def new_user(data: User):
   try:

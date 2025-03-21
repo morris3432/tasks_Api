@@ -1,8 +1,6 @@
-
 # Tasks API
 
 Una API para gestionar tareas de manera fácil, creada con FastAPI y MySQL como base de datos y cuenta con autetificación OAuth2 y JWT. Esta API incluye Docker para facilitar el despliegue.
-
 
 ## Instalación
 
@@ -31,6 +29,20 @@ En la siguiente tabla se te mostrarán los comandos que tiene el proyecto.
 | Format | Formatea el código dejando 2 espacios de indentación | inv format |
 | Requirements | Actualiza las dependecias de requirements.txt | inv requirements |
 | Install | Instala las dependecias de requirements.txt | inv install |
+
+## Docker
+### Instrucciones
+
+1. Construye la imagen de Docker: `docker build -t mi-proyecto .`
+2. Ejecuta la aplicación: `docker run -p 8000:8000 mi-proyecto`
+
+### Comandos de Docker
+
+* `docker build -t mi-proyecto .`: Construye la imagen de Docker.
+* `docker run -p 8000:8000 mi-proyecto`: Ejecuta la aplicación.
+* `docker ps`: Muestra los contenedores en ejecución.
+* `docker stop <id_contenedor>`: Detiene un contenedor en ejecución.
+
 
 ## Autor
 
