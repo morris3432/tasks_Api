@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import jwt
 import requests
 import random
+
 # conexión a la base de datos
 from ..database.mysql import conn
 from ..models.user import user
