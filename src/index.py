@@ -12,18 +12,18 @@ from .routers.tasks import task
 app = FastAPI()
 
 origins = ["*",
-  "http://localhost", 
-  "http://127.0.0.1", 
-  "exp://192.168.X.X:19000"
-]
+           "http://localhost",
+           "http://127.0.0.1",
+           "exp://192.168.X.X:19000"
+           ]
 
 # configuración de CORS
 app.add_middleware(
-  CORSMiddleware,
-  allow_origins=origins,
-  allow_credentials=True,
-  allow_methods=["*"],
-  allow_headers=["*"],
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # incluir rutas
@@ -35,6 +35,7 @@ app.include_router(task)
 # middlewares
 # app.middleware("http")(not_found)
 # app.add_exception_handler(HTTPException, custom_404)
+
 
 @app.get("/")
 async def root():
