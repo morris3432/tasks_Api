@@ -35,8 +35,6 @@ def get_tasks(token: str):
         tasks.select()
         .where(tasks.c.id_user == id_user)
     ).fetchall()
-    
-    conn.closed()
 
     response = [
         dict(res._mapping)
@@ -50,7 +48,6 @@ def get_tasks(token: str):
     }
 
   except Exception as e:
-    conn.rollback()
     raise HTTPException(
         status_code=500,
         detail=str(e)
@@ -92,8 +89,6 @@ def new_task(data: Task):
 
     conn.execute(tasks.insert().values(dicts))
     conn.commit()
-    
-    conn.closed()
 
     return {
         "status": "OK",
@@ -104,4 +99,4 @@ def new_task(data: Task):
     raise HTTPException(
         status_code=500,
         detail=str(e)
-  )
+    )

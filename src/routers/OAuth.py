@@ -10,40 +10,32 @@ from ..models.user import user
 from ..config.config import Config
 
 jwts = APIRouter(
-    prefix="/auth",
-    tags=["Auth"],
+  prefix="/auth",
+  tags=["Auth"],
 )
 
 config = Config()
 now = datetime.now()
 future = now + timedelta(days=7)
 
-
 def generate_token(length: int = 8) -> str:
-  alphabet = string.ascii_letters + string.digits
-  return ''.join(secrets.choice(alphabet) for _ in range(length))
-
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(length))
 
 def search_user(email: str, password: str):
-  try:
-    resp = conn.execute(
-        user.select().where(
-            user.c.email == email, user.c.password == password
-        )
-    ).mappings().fetchone()
-    if not resp:
-      conn.rollback()
-      return False
-
-    return resp
-  except Exception as e:
+  resp = conn.execute(
+    user.select().where(
+    user.c.email == email, user.c.password == password
+    )
+  ).mappings().fetchone()
+  if not resp:
     conn.rollback()
-    raise e
-
+    return False
+    
+  return resp
 
 @jwts.post("/")
 def login(form: OAuth2PasswordRequestForm = Depends()):
-  try:
     users = search_user(email=form.username, password=form.password)
 
     if not users:
@@ -56,7 +48,7 @@ def login(form: OAuth2PasswordRequestForm = Depends()):
 
     # Genera un token aleatorio de 8 caracteres
     access_token = generate_token(8)
-
+    
     session = {
         "token": access_token,
         "id_user": users["id_user"],
@@ -69,12 +61,9 @@ def login(form: OAuth2PasswordRequestForm = Depends()):
     conn.commit()
 
     res = [{**users, **session}]
-
+    
     return {
         "status": "success",
         "row": len(res),
         "data": res
     }
-  except Exception as e:
-    conn.rollback()
-    raise {"status": "ERROR", "message": str(e)}
